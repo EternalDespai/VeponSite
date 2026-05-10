@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Результат оплаты - Vepon VPN</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="logo">
+        <img src="assets/logo.png" alt="Vepon" />
+        <span>VEPON</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="catalog.html">Тарифы</a>
+        <a href="instructions.html">Инструкции</a>
+        <a href="support.html">FAQ</a>
+        <a href="index.html">О сервисе</a>
+        <a href="account.html">Профиль</a>
+      </nav>
+
+      <a href="cart.html" class="btn primary">Корзина</a>
+    </div>
+  </header>
+
+  <!-- RESULT -->
+  <section class="section">
+    <div class="container">
+      
+      <div class="result-container" id="resultContainer">
+        <!-- Dynamic content based on URL parameter -->
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Навигация</h4>
+          <a href="catalog.html">Тарифы</a>
+          <a href="instructions.html">Инструкции</a>
+          <a href="support.html">Поддержка</a>
+          <a href="account.html">Личный кабинет</a>
+        </div>
+
+        <div class="footer-section">
+          <h4>FAQ</h4>
+          <a href="support.html">Как получить конфиг?</a>
+          <a href="support.html">Сколько устройств?</a>
+          <a href="support.html">Способы оплаты</a>
+          <a href="support.html">Политика конфиденциальности</a>
+        </div>
+
+        <div class="footer-section">
+          <h4>Контакты</h4>
+          <a href="https://t.me/vepon_bot">Telegram-бот: @vepon_bot</a>
+          <a href="https://t.me/vepon_news">Telegram-канал: @vepon_news</a>
+          <a href="mailto:support@veponvpn.com">Email: support@veponvpn.com</a>
+          <p style="color: #888; font-size: 14px; margin-top: 10px;">Ежедневно с 12:00 до 24:00 (МСК)</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <a href="https://telegra.ph/POLITIKA-KONFIDENCIALNOSTI-05-09-14">Политика конфиденциальности</a>
+        <a href="https://telegra.ph/PUBLICHNAYA-OFERTA-05-09-2">Публичная оферта</a>
+        <p style="color: #666; margin-top: 15px;">© 2026 Vepon VPN</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status') || 'pending';
+    const container = document.getElementById('resultContainer');
+
+    if (status === 'success') {
+      container.innerHTML = `
+        <div class="icon success">✓</div>
+        <h1>Оплата успешно выполнена!</h1>
+        <p class="message">Ваша подписка активирована. Доступ к VPN уже открыт.</p>
+        <div class="actions">
+          <button class="btn primary" onclick="window.location.href='account.html'">Перейти в личный кабинет</button>
+          <button class="btn ghost" onclick="window.location.href='instructions.html'">Инструкция по подключению</button>
+        </div>
+      `;
+    } else if (status === 'failed') {
+      container.innerHTML = `
+        <div class="icon error">✕</div>
+        <h1>Оплата не удалась</h1>
+        <p class="message">Произошла ошибка при обработке платежа. Попробуйте снова или выберите другой способ оплаты.</p>
+        <div class="actions">
+          <button class="btn primary" onclick="window.location.href='payment.html'">Попробовать снова</button>
+          <button class="btn ghost" onclick="window.location.href='support.html'">Связаться с поддержкой</button>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="icon pending">⟳</div>
+        <h1>Оплата в обработке</h1>
+        <p class="message">Ваш платеж обрабатывается. Это может занять несколько минут. Статус обновится автоматически.</p>
+        <div class="actions">
+          <button class="btn primary" onclick="window.location.reload()">Обновить статус</button>
+          <button class="btn ghost" onclick="window.location.href='account.html'">Перейти в личный кабинет</button>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

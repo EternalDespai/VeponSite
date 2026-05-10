@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Оформление заказа - Vepon VPN</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="logo">
+        <img src="assets/logo.png" alt="Vepon" />
+        <span>VEPON</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="catalog.html">Тарифы</a>
+        <a href="instructions.html">Инструкции</a>
+        <a href="support.html">FAQ</a>
+        <a href="index.html">О сервисе</a>
+        <a href="account.html">Профиль</a>
+      </nav>
+
+      <a href="cart.html" class="btn primary">Корзина</a>
+    </div>
+  </header>
+
+  <!-- CHECKOUT -->
+  <section class="section">
+    <div class="container">
+      
+      <div class="page-header">
+        <h1>Оформление заказа</h1>
+      </div>
+
+      <div class="checkout-grid">
+        
+        <div class="checkout-form">
+          <h3>Подтверждение аккаунта</h3>
+          <p style="color: #888; margin-bottom: 20px;">Войдите через Telegram для продолжения</p>
+
+          <div class="form-group">
+            <label>Telegram Login</label>
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+              <button class="btn primary" style="background: #0088cc;">Войти через Telegram</button>
+              <p style="color: #888; font-size: 12px; margin-top: 10px;">Нажмите, чтобы авторизоваться</p>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 30px;">
+            <label>Email для чека (опционально)</label>
+            <input type="email" placeholder="email@example.com" />
+          </div>
+
+          <div class="form-group">
+            <label>Промокод (опционально)</label>
+            <div style="display: flex; gap: 10px;">
+              <input type="text" placeholder="Введите промокод" />
+              <button class="btn ghost">Применить</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-summary">
+          <h3>Ваш заказ</h3>
+          
+          <div class="item">
+            <span>Подписка 6 месяцев</span>
+            <span>850₽</span>
+          </div>
+
+          <div class="item">
+            <span>Скидка</span>
+            <span style="color: #888;">0₽</span>
+          </div>
+
+          <div class="total">
+            Итого: 850₽
+          </div>
+
+          <div style="margin-top: 30px;">
+            <button class="btn primary" style="width: 100%;" onclick="window.location.href='payment.html'">Перейти к оплате</button>
+            <button class="btn ghost" style="width: 100%; margin-top: 10px;" onclick="window.location.href='cart.html'">Вернуться в корзину</button>
+          </div>
+
+          <div style="margin-top: 20px; font-size: 12px; color: #888; line-height: 1.6;">
+            <p>Нажимая кнопку, вы соглашаетесь с условиями использования и политикой конфиденциальности.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Навигация</h4>
+          <a href="catalog.html">Тарифы</a>
+          <a href="instructions.html">Инструкции</a>
+          <a href="support.html">Поддержка</a>
+          <a href="account.html">Личный кабинет</a>
+        </div>
+
+        <div class="footer-section">
+          <h4>FAQ</h4>
+          <a href="support.html">Как получить конфиг?</a>
+          <a href="support.html">Сколько устройств?</a>
+          <a href="support.html">Способы оплаты</a>
+          <a href="support.html">Политика конфиденциальности</a>
+        </div>
+
+        <div class="footer-section">
+          <h4>Контакты</h4>
+          <a href="https://t.me/vepon_bot">Telegram-бот: @vepon_bot</a>
+          <a href="https://t.me/vepon_news">Telegram-канал: @vepon_news</a>
+          <a href="mailto:support@veponvpn.com">Email: support@veponvpn.com</a>
+          <p style="color: #888; font-size: 14px; margin-top: 10px;">Ежедневно с 12:00 до 24:00 (МСК)</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <a href="https://telegra.ph/POLITIKA-KONFIDENCIALNOSTI-05-09-14">Политика конфиденциальности</a>
+        <a href="https://telegra.ph/PUBLICHNAYA-OFERTA-05-09-2">Публичная оферта</a>
+        <p style="color: #666; margin-top: 15px;">© 2026 Vepon VPN</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/checkout.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный кабинет - Vepon VPN</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="logo">
+        <img src="assets/logo.png" alt="Vepon" />
+        <span>VEPON</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="catalog.html">Тарифы</a>
+        <a href="instructions.html">Инструкции</a>
+        <a href="support.html">FAQ</a>
+        <a href="index.html">О сервисе</a>
+        <a href="account.html" class="active">Профиль</a>
+      </nav>
+
+      <a href="cart.html" class="btn primary">Корзина</a>
+    </div>
+  </header>
+
+  <!-- ACCOUNT -->
+  <section class="section">
+    <div class="container">
+      
+      <div class="page-header">
+        <h1>Личный кабинет</h1>
+      </div>
+
+      <div class="account-grid">
+        
+        <div class="account-sidebar">
+          <div class="user-info">
+            <h3>@username</h3>
+            <p style="color: #888; font-size: 14px;">Telegram ID: 123456789</p>
+          </div>
+
+          <a href="account.html" class="nav-item active">Моя подписка</a>
+          <a href="account-history.html" class="nav-item">История заказов</a>
+          <a href="instructions.html" class="nav-item">Инструкции</a>
+          <a href="support.html" class="nav-item">Поддержка</a>
+        </div>
+
+        <div class="account-content">
+          
+          <div class="subscription-card">
+            <span class="status active">Активна</span>
+            <h2>Текущая подписка</h2>
+            
+            <div class="info-row">
+              <span class="label">Тариф</span>
+              <span class="value">6 месяцев</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Дата начала</span>
+              <span class="value">10.05.2026</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Дата окончания</span>
+              <span class="value">09.11.2026</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Осталось дней</span>
+              <span class="value">183</span>
+            </div>
+
+            <div style="margin-top: 30px;">
+              <button class="btn primary" onclick="window.location.href='catalog.html'">Продлить подписку</button>
+              <button class="btn ghost" onclick="window.location.href='instructions.html'">Как подключиться</button>
+            </div>
+          </div>
+
+          <div class="subscription-card">
+            <h3>Быстрое продление</h3>
+            <p style="color: #888; margin-bottom: 20px;">Продлите текущий тариф на тот же период</p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <span>6 месяцев</span>
+              <span style="font-size: 24px; font-weight: bold;">850₽</span>
+            </div>
+
+            <button class="btn primary" style="width: 100%;" onclick="window.location.href='checkout.html'">Продлить сейчас</button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Навигация</h4>
+          <a href="catalog.html">Тарифы</a>
+          <a href="instructions.html">Инструкции</a>
+          <a href="support.html">Поддержка</a>
+          <a href="account.html">Личный кабинет</a>
+        </div>
+
+        <div class="footer-section">
+          <h4>FAQ</h4>
+          <a href="support.html">Как получить конфиг?</a>
+          <a href="support.html">Сколько устройств?</a>
+          <a href="support.html">Способы оплаты</a>
+          <a href="support.html">Политика конфиденциальности</a>
+        </div>
+
+        <div class="footer-section">
+          <h4>Контакты</h4>
+          <a href="https://t.me/vepon_bot">Telegram-бот: @vepon_bot</a>
+          <a href="https://t.me/vepon_news">Telegram-канал: @vepon_news</a>
+          <a href="mailto:support@veponvpn.com">Email: support@veponvpn.com</a>
+          <p style="color: #888; font-size: 14px; margin-top: 10px;">Ежедневно с 12:00 до 24:00 (МСК)</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <a href="https://telegra.ph/POLITIKA-KONFIDENCIALNOSTI-05-09-14">Политика конфиденциальности</a>
+        <a href="https://telegra.ph/PUBLICHNAYA-OFERTA-05-09-2">Публичная оферта</a>
+        <p style="color: #666; margin-top: 15px;">© 2026 Vepon VPN</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/account.js"></script>
+</body>
+</html>
