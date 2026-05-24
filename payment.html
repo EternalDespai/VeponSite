@@ -4,103 +4,55 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Оплата - Vepon VPN</title>
-
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <header class="navbar">
     <div class="container nav-inner">
       <div class="logo">
         <img src="assets/logo.png" alt="Vepon" />
         <span>VEPON</span>
       </div>
-
       <nav class="nav-links">
         <a href="catalog.html">Тарифы</a>
         <a href="instructions.html">Инструкции</a>
-        <a href="support.html">FAQ</a>
         <a href="index.html">О сервисе</a>
-        <a href="account.html">Профиль</a>
       </nav>
-
-      <a href="cart.html" class="btn primary">Корзина</a>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <a href="account.html" class="btn primary">Профиль</a>
+        <a href="cart.html" class="btn cart-btn">🛒</a>
+      </div>
+      <a href="support.html" style="color: #fff; text-decoration: none; font-weight: 500; margin-left: 20px;">FAQ</a>
     </div>
   </header>
 
-  <!-- PAYMENT -->
   <section class="section">
     <div class="container">
-      
       <div class="payment-container">
         <h1>Оплата заказа</h1>
-        <p style="color: #888;">Заказ #12345</p>
-
-        <div class="loader"></div>
-
-        <p class="status pending">Ожидание оплаты...</p>
+        <p style="color: #888;">Заказ #<span id="order-id">---</span></p>
 
         <div style="background: rgba(255,255,255,0.03); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.08); margin-top: 30px;">
-          <p style="margin-bottom: 20px;">Сумма к оплате: <strong>850₽</strong></p>
+          <p style="margin-bottom: 20px;">Сумма к оплате: <strong id="payment-amount">0₽</strong></p>
           
           <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-            <p style="font-size: 14px; color: #888;">Здесь будет интегрирована платежная система RollyPay</p>
-            <p style="font-size: 12px; color: #666; margin-top: 10px;">После редиректа на платежный шлюз выполните оплату</p>
+            <p style="font-size: 14px; color: #888;">Оплата через RollyPay</p>
           </div>
 
-          <button class="btn primary" style="width: 100%;">Открыть платежную страницу</button>
-        </div>
-
-        <div style="margin-top: 30px;">
-          <button class="btn ghost" onclick="window.location.href='payment-result.html?status=success'">Тест: Успешная оплата</button>
-          <button class="btn ghost" onclick="window.location.href='payment-result.html?status=failed'">Тест: Ошибка оплаты</button>
+          <button id="pay-button" class="btn primary" style="width: 100%;">Оплатить</button>
         </div>
 
         <p style="color: #666; font-size: 12px; margin-top: 30px;">
-          Не закрывайте эту страницу до завершения оплаты. Статус обновится автоматически.
+          Не закрывайте эту страницу до завершения оплаты.
         </p>
       </div>
-
     </div>
   </section>
 
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>Навигация</h4>
-          <a href="catalog.html">Тарифы</a>
-          <a href="instructions.html">Инструкции</a>
-          <a href="support.html">Поддержка</a>
-          <a href="account.html">Личный кабинет</a>
-        </div>
+  <footer>...</footer>
 
-        <div class="footer-section">
-          <h4>FAQ</h4>
-          <a href="support.html">Как получить конфиг?</a>
-          <a href="support.html">Сколько устройств?</a>
-          <a href="support.html">Способы оплаты</a>
-          <a href="support.html">Политика конфиденциальности</a>
-        </div>
-
-        <div class="footer-section">
-          <h4>Контакты</h4>
-          <a href="https://t.me/vepon_bot">Telegram-бот: @vepon_bot</a>
-          <a href="https://t.me/vepon_news">Telegram-канал: @vepon_news</a>
-          <a href="mailto:support@veponvpn.com">Email: support@veponvpn.com</a>
-          <p style="color: #888; font-size: 14px; margin-top: 10px;">Ежедневно с 12:00 до 24:00 (МСК)</p>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <a href="https://telegra.ph/POLITIKA-KONFIDENCIALNOSTI-05-09-14">Политика конфиденциальности</a>
-        <a href="https://telegra.ph/PUBLICHNAYA-OFERTA-05-09-2">Публичная оферта</a>
-        <p style="color: #666; margin-top: 15px;">© 2026 Vepon VPN</p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/payment.js"></script>
+  <script src="js/nav-indicator.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

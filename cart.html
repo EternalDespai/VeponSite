@@ -20,12 +20,14 @@
       <nav class="nav-links">
         <a href="catalog.html">Тарифы</a>
         <a href="instructions.html">Инструкции</a>
-        <a href="support.html">FAQ</a>
         <a href="index.html">О сервисе</a>
-        <a href="account.html">Профиль</a>
       </nav>
 
-      <a href="cart.html" class="btn primary">Корзина</a>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <a href="account.html" class="btn primary">Профиль</a>
+        <a href="cart.html" class="btn cart-btn">🛒</a>
+      </div>
+      <a href="support.html" style="color: #fff; text-decoration: none; font-weight: 500; margin-left: 20px;">FAQ</a>
     </div>
   </header>
 
@@ -37,37 +39,17 @@
         <h1>Корзина</h1>
       </div>
 
-      <table class="cart-table">
-        <thead>
-          <tr>
-            <th>Тариф</th>
-            <th>Срок</th>
-            <th>Цена</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <strong>6 месяцев</strong>
-              <div style="font-size: 12px; color: #888;">POPULAR</div>
-            </td>
-            <td>180 дней</td>
-            <td>850₽</td>
-            <td>
-              <button class="remove-btn">✕ Удалить</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div id="cart-items">
+        <!-- Cart items will be rendered here by JavaScript -->
+      </div>
 
-      <div class="cart-summary">
+      <div class="cart-summary" id="cart-summary">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-          <span>Подписка (6 месяцев)</span>
-          <span>850₽</span>
+          <span id="summary-plan">Подписка</span>
+          <span id="summary-price">0₽</span>
         </div>
         <div class="total">
-          Итого: 850₽
+          Итого: <span id="total-price">0₽</span>
         </div>
         <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
           <button class="btn ghost" onclick="window.location.href='catalog.html'">Продолжить покупки</button>
@@ -112,8 +94,7 @@
         <p style="color: #666; margin-top: 15px;">© 2026 Vepon VPN</p>
       </div>
     </div>
-  </footer>
-
-  <script src="js/cart.js"></script>
+  <script src="js/nav-indicator.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

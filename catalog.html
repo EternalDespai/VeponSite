@@ -20,12 +20,14 @@
       <nav class="nav-links">
         <a href="catalog.html">Тарифы</a>
         <a href="instructions.html">Инструкции</a>
-        <a href="support.html">FAQ</a>
         <a href="index.html">О сервисе</a>
-        <a href="account.html">Профиль</a>
       </nav>
 
-      <a href="cart.html" class="btn primary">Корзина</a>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <a href="account.html" class="btn primary">Профиль</a>
+        <a href="cart.html" class="btn cart-btn">🛒</a>
+      </div>
+      <a href="support.html" style="color: #fff; text-decoration: none; font-weight: 500; margin-left: 20px;">FAQ</a>
     </div>
   </header>
 
@@ -38,76 +40,86 @@
 
       <!-- PLANS GRID -->
       <div class="grid-3" id="plansGrid">
-        
-        <div class="tariff">
-          <h3>Пробный период</h3>
-          <p class="price">0₽</p>
-          <p class="duration">3 дня</p>
-          <ul class="features">
-            <li>✓ Полный доступ</li>
-            <li>✓ Все серверы</li>
-            <li>✓ Без ограничений скорости</li>
-          </ul>
-          <button class="btn primary" onclick="window.location.href='plan.html?code=trial'">Подробнее</button>
-        </div>
+  
+  <div class="tariff" id="tariff-trial" data-product-id="5">
+    <div class="tariff-content">
+      <h3>Пробный период</h3>
+      <p class="price">0₽</p>
+      <p class="duration">3 дня</p>
+      <ul class="features">
+        <li>✓ Полный доступ</li>
+        <li>✓ Все серверы</li>
+        <li>✓ Без ограничений скорости</li>
+      </ul>
+    </div>
+    <button class="btn primary btn-buy" data-plan-id="trial" data-plan-name="Пробный период" data-plan-price="0₽" data-plan-duration="3 дня">Купить</button>
+  </div>
 
-        <div class="tariff">
-          <h3>1 месяц</h3>
-          <p class="price">180₽</p>
-          <p class="duration">30 дней</p>
-          <ul class="features">
-            <li>✓ Полный доступ</li>
-            <li>✓ Все серверы</li>
-            <li>✓ Без ограничений скорости</li>
-            <li>✓ Приоритетная поддержка</li>
-          </ul>
-          <button class="btn primary" onclick="window.location.href='plan.html?code=1month'">Подробнее</button>
-        </div>
+  <div class="tariff" id="tariff-1month" data-product-id="1">
+    <div class="tariff-content">
+      <h3>1 месяц</h3>
+      <p class="price">180₽</p>
+      <p class="duration">30 дней</p>
+      <ul class="features">
+        <li>✓ Полный доступ</li>
+        <li>✓ Все серверы</li>
+        <li>✓ Без ограничений скорости</li>
+        <li>✓ Приоритетная поддержка</li>
+      </ul>
+    </div>
+    <button class="btn primary btn-buy" data-plan-id="1month" data-plan-name="1 месяц" data-plan-price="180₽" data-plan-duration="30 дней">Купить</button>
+  </div>
 
-        <div class="tariff">
-          <h3>3 месяца</h3>
-          <p class="price">425₽</p>
-          <p class="duration">90 дней</p>
-          <ul class="features">
-            <li>✓ Полный доступ</li>
-            <li>✓ Все серверы</li>
-            <li>✓ Без ограничений скорости</li>
-            <li>✓ Приоритетная поддержка</li>
-            <li>✓ Экономия 21%</li>
-          </ul>
-          <button class="btn primary" onclick="window.location.href='plan.html?code=3month'">Подробнее</button>
-        </div>
+  <div class="tariff" id="tariff-3month" data-product-id="2">
+    <div class="tariff-content">
+      <h3>3 месяца</h3>
+      <p class="price">425₽</p>
+      <p class="duration">90 дней</p>
+      <ul class="features">
+        <li>✓ Полный доступ</li>
+        <li>✓ Все серверы</li>
+        <li>✓ Без ограничений скорости</li>
+        <li>✓ Приоритетная поддержка</li>
+        <li>✓ Экономия 21%</li>
+      </ul>
+    </div>
+    <button class="btn primary btn-buy" data-plan-id="3month" data-plan-name="3 месяца" data-plan-price="425₽" data-plan-duration="90 дней">Купить</button>
+  </div>
 
-        <div class="tariff popular">
-          <span>POPULAR</span>
-          <h3>6 месяцев</h3>
-          <p class="price">850₽</p>
-          <p class="duration">180 дней</p>
-          <ul class="features">
-            <li>✓ Полный доступ</li>
-            <li>✓ Все серверы</li>
-            <li>✓ Без ограничений скорости</li>
-            <li>✓ Приоритетная поддержка</li>
-            <li>✓ Экономия 21%</li>
-          </ul>
-          <button class="btn primary" onclick="window.location.href='plan.html?code=6month'">Подробнее</button>
-        </div>
+  <div class="tariff popular" id="tariff-6month" data-product-id="3">
+    <span>POPULAR</span>
+    <div class="tariff-content">
+      <h3>6 месяцев</h3>
+      <p class="price">850₽</p>
+      <p class="duration">180 дней</p>
+      <ul class="features">
+        <li>✓ Полный доступ</li>
+        <li>✓ Все серверы</li>
+        <li>✓ Без ограничений скорости</li>
+        <li>✓ Приоритетная поддержка</li>
+        <li>✓ Экономия 35%</li>
+      </ul>
+    </div>
+    <button class="btn primary btn-buy" data-plan-id="6month" data-plan-name="6 месяцев" data-plan-price="850₽" data-plan-duration="180 дней">Купить</button>
+  </div>
 
-        <div class="tariff">
-          <h3>12 месяцев</h3>
-          <p class="price">1600₽</p>
-          <p class="duration">365 дней</p>
-          <ul class="features">
-            <li>✓ Полный доступ</li>
-            <li>✓ Все серверы</li>
-            <li>✓ Без ограничений скорости</li>
-            <li>✓ Приоритетная поддержка</li>
-            <li>✓ Экономия 26%</li>
-          </ul>
-          <button class="btn primary" onclick="window.location.href='plan.html?code=12month'">Подробнее</button>
-        </div>
+  <div class="tariff" id="tariff-12month" data-product-id="4">
+    <div class="tariff-content">
+      <h3>12 месяцев</h3>
+      <p class="price">1600₽</p>
+      <p class="duration">365 дней</p>
+      <ul class="features">
+        <li>✓ Полный доступ</li>
+        <li>✓ Все серверы</li>
+        <li>✓ Без ограничений скорости</li>
+        <li>✓ Приоритетная поддержка</li>
+        <li>✓ Экономия 26%</li>
+      </ul>
+    </div>
+    <button class="btn primary btn-buy" data-plan-id="12month" data-plan-name="12 месяцев" data-plan-price="1600₽" data-plan-duration="365 дней">Купить</button>
+  </div>
 
-      </div>
+</div>
 
     </div>
   </section>
@@ -148,6 +160,7 @@
     </div>
   </footer>
 
-  <script src="js/catalog.js"></script>
+  <script src="js/nav-indicator.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

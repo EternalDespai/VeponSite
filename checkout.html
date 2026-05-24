@@ -6,6 +6,7 @@
   <title>Оформление заказа - Vepon VPN</title>
 
   <link rel="stylesheet" href="css/style.css">
+  <!-- Скрипт виджета загружаем один раз, без динамического создания -->
 </head>
 <body>
 
@@ -20,12 +21,14 @@
       <nav class="nav-links">
         <a href="catalog.html">Тарифы</a>
         <a href="instructions.html">Инструкции</a>
-        <a href="support.html">FAQ</a>
         <a href="index.html">О сервисе</a>
-        <a href="account.html">Профиль</a>
       </nav>
 
-      <a href="cart.html" class="btn primary">Корзина</a>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <a href="account.html" class="btn primary">Профиль</a>
+        <a href="cart.html" class="btn cart-btn">🛒</a>
+      </div>
+      <a href="support.html" style="color: #fff; text-decoration: none; font-weight: 500; margin-left: 20px;">FAQ</a>
     </div>
   </header>
 
@@ -46,14 +49,18 @@
           <div class="form-group">
             <label>Telegram Login</label>
             <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
-              <button class="btn primary" style="background: #0088cc;">Войти через Telegram</button>
-              <p style="color: #888; font-size: 12px; margin-top: 10px;">Нажмите, чтобы авторизоваться</p>
+              <!-- Виджет Telegram – правильная версия (без onauth, только auth-url) -->
+              <div id="telegram-login-widget">
+                <script async src="https://telegram.org/js/telegram-widget.js?22"
+                        data-telegram-login="VePoN_bot"
+                        data-size="large"
+                        data-radius="8"
+                        data-auth-url="https://vepon.ru/auth/telegram"
+                        data-request-access="write">
+                </script>
+              </div>
+              <div id="auth-status" style="color: #888; font-size: 12px; margin-top: 10px;">Нажмите кнопку выше, чтобы авторизоваться</div>
             </div>
-          </div>
-
-          <div class="form-group" style="margin-top: 30px;">
-            <label>Email для чека (опционально)</label>
-            <input type="email" placeholder="email@example.com" />
           </div>
 
           <div class="form-group">
@@ -67,10 +74,9 @@
 
         <div class="order-summary">
           <h3>Ваш заказ</h3>
-          
-          <div class="item">
-            <span>Подписка 6 месяцев</span>
-            <span>850₽</span>
+
+          <div id="checkout-items">
+            <!-- Items will be rendered here by JavaScript -->
           </div>
 
           <div class="item">
@@ -79,11 +85,17 @@
           </div>
 
           <div class="total">
-            Итого: 850₽
+            Итого: <span id="checkout-total">0₽</span>
           </div>
 
           <div style="margin-top: 30px;">
-            <button class="btn primary" style="width: 100%;" onclick="window.location.href='payment.html'">Перейти к оплате</button>
+            <button id="submit-order" class="btn primary" style="width: 100%;">Перейти к оплате</button>
+            <div id="auth-warning" style="display: none; margin-top: 15px; padding: 12px; background: rgba(255, 87, 34, 0.1); border: 1px solid #ff5722; border-radius: 8px; color: #ff5722; text-align: center;">
+                ⚠️ Для оформления заказа необходимо авторизоваться через Telegram
+                <div style="margin-top: 10px;">
+                    <a href="checkout.html" class="btn ghost" style="font-size: 14px;">🔄 Перезагрузить страницу</a>
+                </div>
+            </div>
             <button class="btn ghost" style="width: 100%; margin-top: 10px;" onclick="window.location.href='cart.html'">Вернуться в корзину</button>
           </div>
 
@@ -128,11 +140,34 @@
       <div class="footer-bottom">
         <a href="https://telegra.ph/POLITIKA-KONFIDENCIALNOSTI-05-09-14">Политика конфиденциальности</a>
         <a href="https://telegra.ph/PUBLICHNAYA-OFERTA-05-09-2">Публичная оферта</a>
-        <p style="color: #666; margin-top: 15px;">© 2026 Vepon VPN</p>
+        <p style="color: #666; margin-top: 15px;"> 2026 Vepon VPN</p>
       </div>
     </div>
   </footer>
 
-  <script src="js/checkout.js"></script>
+  <script src="js/nav-indicator.js"></script>
+  <script src="js/main.js"></script>
+  <!-- Дополнительный скрипт для отображения статуса авторизации после редиректа -->
+  <script>
+    (function() {
+      // Проверка статуса авторизации при загрузке страницы
+      fetch('/auth/check', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+          const statusDiv = document.getElementById('auth-status');
+          if (data.authenticated) {
+            statusDiv.innerHTML = `✅ Авторизован: ${data.user_info.username || data.user_id}`;
+            statusDiv.style.color = '#4CAF50';
+          } else {
+            statusDiv.innerHTML = '🔑 Нажмите кнопку выше, чтобы войти';
+            statusDiv.style.color = '#888';
+          }
+        })
+        .catch(err => {
+          console.warn('Не удалось проверить авторизацию:', err);
+          document.getElementById('auth-status').innerHTML = '⚠️ Ошибка проверки авторизации';
+        });
+    })();
+  </script>
 </body>
 </html>

@@ -20,12 +20,14 @@
       <nav class="nav-links">
         <a href="catalog.html">Тарифы</a>
         <a href="instructions.html">Инструкции</a>
-        <a href="support.html">FAQ</a>
         <a href="index.html">О сервисе</a>
-        <a href="account.html">Профиль</a>
       </nav>
 
-      <a href="cart.html" class="btn primary">Корзина</a>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <a href="account.html" class="btn primary">Профиль</a>
+        <a href="cart.html" class="btn cart-btn">🛒</a>
+      </div>
+      <a href="support.html" style="color: #fff; text-decoration: none; font-weight: 500; margin-left: 20px;">FAQ</a>
     </div>
   </header>
 
@@ -113,5 +115,7 @@
       `;
     }
   </script>
+  <script src="js/nav-indicator.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

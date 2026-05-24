@@ -21,10 +21,13 @@
         <a href="catalog.html">Тарифы</a>
         <a href="instructions.html">Инструкции</a>
         <a href="index.html">О сервисе</a>
-        <a href="account.html">Профиль</a>
       </nav>
 
-      <a href="cart.html" class="btn primary">Корзина</a>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <a href="account.html" class="btn primary">Профиль</a>
+        <a href="cart.html" class="btn cart-btn">🛒</a>
+      </div>
+      <a href="support.html" style="color: #fff; text-decoration: none; font-weight: 500; margin-left: 20px;">FAQ</a>
     </div>
   </header>
 
@@ -38,8 +41,6 @@
       </div>
 
       <div class="faq">
-        <h3>Частые вопросы</h3>
-
         <div class="faq-item">
           <div class="question">Как получить конфигурацию для подключения?</div>
           <div class="answer">Напишите нашему Telegram-боту и напишите /check. Конфигурация будет автоматически отправлена вам в чат.</div>
@@ -161,11 +162,13 @@
       <div class="footer-bottom">
         <a href="https://telegra.ph/POLITIKA-KONFIDENCIALNOSTI-05-09-14">Политика конфиденциальности</a>
         <a href="https://telegra.ph/PUBLICHNAYA-OFERTA-05-09-2">Публичная оферта</a>
-        <p style="color: #666; margin-top: 15px;">© 2026 Vepon VPN</p>
+        <p style="color: #666; margin-top: 15px;"> 2026 Vepon VPN</p>
       </div>
     </div>
   </footer>
 
-  <script src="js/support.js"></script>
+  <script src="js/nav-indicator.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/faq.js"></script>
 </body>
 </html>
