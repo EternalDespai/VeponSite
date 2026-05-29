@@ -42,9 +42,12 @@
       <div class="account-grid">
         
         <div class="account-sidebar">
-          <div class="user-info">
-            <h3>@username</h3>
-            <p style="color: #888; font-size: 14px;">Telegram ID: 123456789</p>
+          <div id="user-info" class="user-info">
+              <div class="user-info-card">
+                  <h3 id="user-username">@username</h3>
+                  <p id="user-id" style="color: #888; font-size: 14px;">Telegram ID: --</p>
+                  <p id="user-status" style="font-size: 13px; margin-top: 8px;"></p>
+              </div>
           </div>
 
           <a href="account.html" class="nav-item active">Моя подписка</a>
@@ -81,13 +84,13 @@
           <div class="subscription-card">
             <h3 style="margin-bottom: 20px;">Быстрое продление</h3>
             <p style="color: #888; margin-bottom: 20px;">Продлите текущий тариф на тот же период</p>
-            
+
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-              <span>6 месяцев</span>
-              <span style="font-size: 24px; font-weight: bold;">850₽</span>
+              <span id="renewal-plan-name">6 месяцев</span>
+              <span id="renewal-plan-price" style="font-size: 24px; font-weight: bold;">850₽</span>
             </div>
 
-            <button class="btn primary" style="width: 100%;" onclick="window.location.href='checkout.html'">Продлить сейчас</button>
+            <button id="renewal-btn" class="btn primary" style="width: 100%;">Продлить сейчас</button>
           </div>
 
         </div>

@@ -1,13 +1,31 @@
-// ==================== АВТОРИЗАЦИЯ ====================
-async function checkAuth() {
+// ==================== ЗАГРУЗКА ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ ====================
+async function loadUserInfo() {
     try {
-        const response = await fetch('/auth/check', {
-            credentials: 'include'
-        });
+        const response = await fetch('/auth/check', { credentials: 'include' });
         const data = await response.json();
-        return data;
+        
+        if (!data.authenticated) return null;
+        
+        const user = data.user_info;
+        const expiresAt = user.expires_at ? new Date(user.expires_at) : null;
+        const now = new Date();
+        const isActive = user.has_subscription && expiresAt && expiresAt > now;
+        
+        let statusHtml = '';
+        if (isActive && expiresAt) {
+            const daysLeft = Math.ceil((expiresAt - now) / (1000 * 60 * 60 * 24));
+            statusHtml = `<span class="status-badge active">✅ Подписка активна, осталось ${daysLeft} дн. (до ${expiresAt.toLocaleDateString('ru-RU')})</span>`;
+        } else {
+            statusHtml = `<span class="status-badge expired">⚠️ Нет активной подписки</span>`;
+        }
+        
+        return {
+            username: user.username || user.user_id,
+            userId: user.user_id,
+            statusHtml: statusHtml
+        };
     } catch (error) {
-        console.error('Auth check error:', error);
+        console.error('Error loading user info:', error);
         return null;
     }
 }
@@ -18,13 +36,14 @@ async function loadOrders() {
         const response = await fetch('/api/orders', {
             credentials: 'include'
         });
+        
         if (!response.ok) {
-            if (response.status === 401) {
-                return { error: 'unauthorized' };
-            }
-            throw new Error('Failed to load orders');
+            console.error('Orders response not ok:', response.status);
+            return [];
         }
+        
         const orders = await response.json();
+        console.log('Orders loaded:', orders.length);
         return orders;
     } catch (error) {
         console.error('Error loading orders:', error);
@@ -32,27 +51,38 @@ async function loadOrders() {
     }
 }
 
-// ==================== ФОРМАТИРОВАНИЕ ДАТЫ ====================
-function formatDate(dateString) {
-    if (!dateString) return '—';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-    });
+// ==================== ЗАГРУЗКА ДЕТАЛЕЙ ЗАКАЗА ====================
+async function loadOrderItems(orderId) {
+    try {
+        const response = await fetch(`/api/orders/${orderId}/items`, {
+            credentials: 'include'
+        });
+        if (response.ok) {
+            const items = await response.json();
+            return items.map(item => `${item.name} x${item.quantity}`).join(', ');
+        }
+        return '—';
+    } catch (e) {
+        console.error('Error loading order items:', e);
+        return '—';
+    }
 }
 
+// ==================== ФОРМАТИРОВАНИЕ ДАТЫ ====================
 function formatDateTime(dateString) {
     if (!dateString) return '—';
-    const date = new Date(dateString);
-    return date.toLocaleString('ru-RU', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
+    try {
+        const date = new Date(dateString);
+        return date.toLocaleString('ru-RU', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    } catch (e) {
+        return dateString;
+    }
 }
 
 // ==================== ОТОБРАЖЕНИЕ СТАТУСА ====================
@@ -71,21 +101,31 @@ function getStatusBadge(status) {
 
 // ==================== ОСНОВНАЯ ФУНКЦИЯ ====================
 async function renderAccountHistory() {
-    // Проверяем авторизацию
-    const auth = await checkAuth();
+    console.log('renderAccountHistory started');
+    
     const userInfoDiv = document.getElementById('user-info');
     const ordersTableBody = document.getElementById('orders-table-body');
     const noOrdersMessage = document.getElementById('no-orders-message');
     const ordersContainer = document.getElementById('orders-container');
     
-    if (!auth || !auth.authenticated) {
-        // Пользователь не авторизован
-        if (userInfoDiv) {
+    // Загружаем и отображаем информацию о пользователе
+    const userInfo = await loadUserInfo();
+    
+    if (userInfoDiv) {
+        if (userInfo) {
             userInfoDiv.innerHTML = `
-                <div style="text-align: center; padding: 30px;">
+                <div class="user-info-card">
+                    <h3>@${userInfo.username}</h3>
+                    <p>Telegram ID: ${userInfo.userId}</p>
+                    <div>${userInfo.statusHtml}</div>
+                </div>
+            `;
+        } else {
+            userInfoDiv.innerHTML = `
+                <div class="user-info-card" style="text-align: center;">
                     <p style="color: #ff5722;">⚠️ Вы не авторизованы</p>
-                    <p style="color: #888; font-size: 14px; margin-top: 10px;">Для просмотра истории заказов необходимо войти через Telegram</p>
-                    <div style="margin-top: 20px;">
+                    <p style="color: #888; font-size: 12px; margin-top: 8px;">Войдите через Telegram</p>
+                    <div style="margin-top: 15px;">
                         <script async src="https://telegram.org/js/telegram-widget.js?22"
                                 data-telegram-login="VePoN_bot"
                                 data-size="large"
@@ -97,38 +137,11 @@ async function renderAccountHistory() {
                 </div>
             `;
         }
-        if (ordersContainer) ordersContainer.style.display = 'none';
-        return;
-    }
-    
-    // Показываем информацию о пользователе
-    if (userInfoDiv && auth.user_info) {
-        userInfoDiv.innerHTML = `
-            <div class="user-info-card">
-                <h3>${auth.user_info.username || 'Пользователь'}</h3>
-                <p style="color: #888; font-size: 14px;">Telegram ID: ${auth.user_id}</p>
-                ${auth.user_info.has_subscription ? 
-                    `<p style="color: #4CAF50; font-size: 13px;">✅ Подписка активна</p>` : 
-                    `<p style="color: #ff5722; font-size: 13px;">⚠️ Нет активной подписки</p>`
-                }
-            </div>
-        `;
     }
     
     // Загружаем заказы
     const orders = await loadOrders();
-    
-    if (orders.error === 'unauthorized') {
-        if (userInfoDiv) {
-            userInfoDiv.innerHTML = `
-                <div style="text-align: center; padding: 30px;">
-                    <p>⚠️ Сессия истекла</p>
-                    <a href="checkout.html" class="btn primary">Войти заново</a>
-                </div>
-            `;
-        }
-        return;
-    }
+    console.log('Orders count:', orders.length);
     
     if (!orders || orders.length === 0) {
         if (noOrdersMessage) noOrdersMessage.style.display = 'block';
@@ -138,32 +151,16 @@ async function renderAccountHistory() {
     
     if (noOrdersMessage) noOrdersMessage.style.display = 'none';
     
-    // Загружаем детали заказов (товары)
+    // Строим HTML заказов
     let ordersHtml = '';
     
     for (const order of orders) {
-        // Получаем товары для заказа
-        let itemsHtml = '';
-        try {
-            const itemsResponse = await fetch(`/api/orders/${order.order_id}/items`, {
-                credentials: 'include'
-            });
-            if (itemsResponse.ok) {
-                const items = await itemsResponse.json();
-                itemsHtml = items.map(item => 
-                    `<div class="order-item">${item.name} x${item.quantity}</div>`
-                ).join('');
-            } else {
-                itemsHtml = '<div class="order-item">—</div>';
-            }
-        } catch (e) {
-            itemsHtml = '<div class="order-item">—</div>';
-        }
+        const itemsText = await loadOrderItems(order.order_id);
         
         ordersHtml += `
             <div class="order-card">
                 <div class="order-header">
-                    <div class="order-id">Заказ #${order.order_id}</div>
+                    <div class="order-id">${order.order_id}</div>
                     <div class="order-status">${getStatusBadge(order.status)}</div>
                 </div>
                 <div class="order-details">
@@ -171,8 +168,7 @@ async function renderAccountHistory() {
                         📅 ${formatDateTime(order.created_at)}
                     </div>
                     <div class="order-items">
-                        <strong>Товары:</strong>
-                        ${itemsHtml}
+                        <strong>Товары:</strong> ${itemsText}
                     </div>
                     <div class="order-total">
                         💰 Сумма: <strong>${order.total_rub}₽</strong>
@@ -186,9 +182,12 @@ async function renderAccountHistory() {
     if (ordersTableBody) {
         ordersTableBody.innerHTML = ordersHtml;
     }
+    
+    if (ordersContainer) ordersContainer.style.display = 'block';
 }
 
 // ==================== ИНИЦИАЛИЗАЦИЯ ====================
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing account history');
     renderAccountHistory();
 });

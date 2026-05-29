@@ -5,79 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>История заказов - Vepon VPN</title>
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    .order-card {
-        background: rgba(255,255,255,0.03);
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 15px;
-        border: 1px solid rgba(255,255,255,0.08);
-        transition: all 0.3s ease;
-    }
-    .order-card:hover {
-        background: rgba(255,255,255,0.05);
-        border-color: rgba(255,255,255,0.15);
-    }
-    .order-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .order-id {
-        font-weight: bold;
-        color: #fff;
-        font-size: 16px;
-    }
-    .status {
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 500;
-    }
-    .status.paid {
-        background: rgba(76, 175, 80, 0.2);
-        color: #4CAF50;
-    }
-    .status.pending {
-        background: rgba(255, 152, 0, 0.2);
-        color: #FF9800;
-    }
-    .status.failed {
-        background: rgba(244, 67, 54, 0.2);
-        color: #F44336;
-    }
-    .order-details {
-        font-size: 14px;
-        color: #aaa;
-        line-height: 1.6;
-    }
-    .order-date, .order-total, .order-paid {
-        margin: 8px 0;
-    }
-    .order-items {
-        margin: 10px 0;
-        padding-left: 10px;
-        border-left: 2px solid rgba(255,255,255,0.2);
-    }
-    .order-item {
-        margin: 4px 0;
-    }
-    .user-info-card {
-        padding: 15px;
-        background: rgba(255,255,255,0.05);
-        border-radius: 12px;
-        margin-bottom: 20px;
-    }
-    .no-orders {
-        text-align: center;
-        padding: 60px 20px;
-        background: rgba(255,255,255,0.03);
-        border-radius: 15px;
-    }
-  </style>
 </head>
 <body>
 
@@ -133,10 +60,10 @@
             </div>
           </div>
 
-          <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 15px;">
-            <h3>Нужна помощь с заказом?</h3>
-            <p style="color: #888;">Если у вас есть вопросы по какому-либо заказу, свяжитесь с поддержкой.</p>
-            <button class="btn ghost" onclick="window.location.href='support.html'">Связаться с поддержкой</button>
+          <div class="support-block">
+              <h3>Нужна помощь с заказом?</h3>
+              <p>Если у вас есть вопросы по какому-либо заказу, свяжитесь с поддержкой.</p>
+              <button class="btn ghost" onclick="window.location.href='support.html'">Связаться с поддержкой</button>
           </div>
         </div>
 
@@ -144,7 +71,41 @@
     </div>
   </section>
 
-  <footer>...</footer>
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Навигация</h4>
+          <a href="catalog.html">Тарифы</a>
+          <a href="instructions.html">Инструкции</a>
+          <a href="support.html">Поддержка</a>
+          <a href="account.html">Личный кабинет</a>
+        </div>
+
+        <div class="footer-section">
+          <h4>FAQ</h4>
+          <a href="support.html">Как получить конфиг?</a>
+          <a href="support.html">Сколько устройств?</a>
+          <a href="support.html">Способы оплаты</a>
+          <a href="support.html">Политика конфиденциальности</a>
+        </div>
+
+        <div class="footer-section">
+          <h4>Контакты</h4>
+          <a href="https://t.me/vepon_bot">Telegram-бот: @vepon_bot</a>
+          <a href="https://t.me/vepon_news">Telegram-канал: @vepon_news</a>
+          <a href="mailto:support@veponvpn.com">Email: support@veponvpn.com</a>
+          <p style="color: #888; font-size: 14px; margin-top: 10px;">Ежедневно с 12:00 до 24:00 (МСК)</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <a href="https://telegra.ph/POLITIKA-KONFIDENCIALNOSTI-05-09-14">Политика конфиденциальности</a>
+        <a href="https://telegra.ph/PUBLICHNAYA-OFERTA-05-09-2">Публичная оферта</a>
+        <p style="color: #666; margin-top: 15px;"> 2026 Vepon VPN</p>
+      </div>
+    </div>
+  </footer>
 
   <script src="js/nav-indicator.js"></script>
   <script src="js/account-history.js"></script>

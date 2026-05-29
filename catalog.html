@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Каталог тарифов - Vepon VPN</title>
-
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -16,13 +15,11 @@
         <img src="assets/logo.png" alt="Vepon" />
         <span>VEPON</span>
       </div>
-
       <nav class="nav-links">
         <a href="catalog.html">Тарифы</a>
         <a href="instructions.html">Инструкции</a>
         <a href="index.html">О сервисе</a>
       </nav>
-
       <div style="display: flex; gap: 10px; align-items: center;">
         <a href="account.html" class="btn primary">Профиль</a>
         <a href="cart.html" class="btn cart-btn">🛒</a>
@@ -34,93 +31,15 @@
   <!-- CATALOG -->
   <section class="section">
     <div class="container">
-      
       <h1>Каталог тарифов</h1>
       <p class="desc">Выберите подходящий тариф для подключения VPN</p>
-
-      <!-- PLANS GRID -->
+      <!-- PLANS GRID - пустой, заполняется через JS -->
       <div class="grid-3" id="plansGrid">
-  
-  <div class="tariff" id="tariff-trial" data-product-id="5">
-    <div class="tariff-content">
-      <h3>Пробный период</h3>
-      <p class="price">0₽</p>
-      <p class="duration">3 дня</p>
-      <ul class="features">
-        <li>✓ Полный доступ</li>
-        <li>✓ Все серверы</li>
-        <li>✓ Без ограничений скорости</li>
-      </ul>
-    </div>
-    <button class="btn primary btn-buy" data-plan-id="trial" data-plan-name="Пробный период" data-plan-price="0₽" data-plan-duration="3 дня">Купить</button>
-  </div>
-
-  <div class="tariff" id="tariff-1month" data-product-id="1">
-    <div class="tariff-content">
-      <h3>1 месяц</h3>
-      <p class="price">180₽</p>
-      <p class="duration">30 дней</p>
-      <ul class="features">
-        <li>✓ Полный доступ</li>
-        <li>✓ Все серверы</li>
-        <li>✓ Без ограничений скорости</li>
-        <li>✓ Приоритетная поддержка</li>
-      </ul>
-    </div>
-    <button class="btn primary btn-buy" data-plan-id="1month" data-plan-name="1 месяц" data-plan-price="180₽" data-plan-duration="30 дней">Купить</button>
-  </div>
-
-  <div class="tariff" id="tariff-3month" data-product-id="2">
-    <div class="tariff-content">
-      <h3>3 месяца</h3>
-      <p class="price">425₽</p>
-      <p class="duration">90 дней</p>
-      <ul class="features">
-        <li>✓ Полный доступ</li>
-        <li>✓ Все серверы</li>
-        <li>✓ Без ограничений скорости</li>
-        <li>✓ Приоритетная поддержка</li>
-        <li>✓ Экономия 21%</li>
-      </ul>
-    </div>
-    <button class="btn primary btn-buy" data-plan-id="3month" data-plan-name="3 месяца" data-plan-price="425₽" data-plan-duration="90 дней">Купить</button>
-  </div>
-
-  <div class="tariff popular" id="tariff-6month" data-product-id="3">
-    <span>POPULAR</span>
-    <div class="tariff-content">
-      <h3>6 месяцев</h3>
-      <p class="price">850₽</p>
-      <p class="duration">180 дней</p>
-      <ul class="features">
-        <li>✓ Полный доступ</li>
-        <li>✓ Все серверы</li>
-        <li>✓ Без ограничений скорости</li>
-        <li>✓ Приоритетная поддержка</li>
-        <li>✓ Экономия 35%</li>
-      </ul>
-    </div>
-    <button class="btn primary btn-buy" data-plan-id="6month" data-plan-name="6 месяцев" data-plan-price="850₽" data-plan-duration="180 дней">Купить</button>
-  </div>
-
-  <div class="tariff" id="tariff-12month" data-product-id="4">
-    <div class="tariff-content">
-      <h3>12 месяцев</h3>
-      <p class="price">1600₽</p>
-      <p class="duration">365 дней</p>
-      <ul class="features">
-        <li>✓ Полный доступ</li>
-        <li>✓ Все серверы</li>
-        <li>✓ Без ограничений скорости</li>
-        <li>✓ Приоритетная поддержка</li>
-        <li>✓ Экономия 26%</li>
-      </ul>
-    </div>
-    <button class="btn primary btn-buy" data-plan-id="12month" data-plan-name="12 месяцев" data-plan-price="1600₽" data-plan-duration="365 дней">Купить</button>
-  </div>
-
-</div>
-
+        <!-- Скелетон (опционально, для красоты) -->
+        <div class="skeleton-card" style="background: rgba(255,255,255,0.05); border-radius: 15px; height: 350px;"></div>
+        <div class="skeleton-card" style="background: rgba(255,255,255,0.05); border-radius: 15px; height: 350px;"></div>
+        <div class="skeleton-card" style="background: rgba(255,255,255,0.05); border-radius: 15px; height: 350px;"></div>
+      </div>
     </div>
   </section>
 

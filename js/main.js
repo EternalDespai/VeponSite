@@ -351,11 +351,11 @@ function showAuthModal(productId, productName) {
     `;
     
     modal.innerHTML = `
-        <div style="background: #1a1a2e; padding: 30px; border-radius: 20px; max-width: 400px; text-align: center;">
+        <div style="background: #202024; padding: 30px; border-radius: 20px; max-width: 400px; text-align: center;">
             <h3 style="margin-bottom: 20px;">🔐 Требуется авторизация</h3>
-            <p style="color: #888; margin-bottom: 20px;">Для добавления товара в корзину необходимо войти через Telegram</p>
+            <p style="color: #ffffff; margin-bottom: 20px;">Для добавления товара в корзину необходимо войти через Telegram</p>
             <div id="telegram-widget-container"></div>
-            <button id="close-modal" style="margin-top: 20px; background: none; border: 1px solid #888; color: #888; padding: 8px 20px; border-radius: 8px; cursor: pointer;">Закрыть</button>
+            <button id="close-modal" style="margin-top: 20px; background: none; border: 1px solid #ffffff; color: #ffffff; padding: 8px 20px; border-radius: 8px; cursor: pointer;">Закрыть</button>
         </div>
     `;
     
@@ -442,85 +442,68 @@ async function processPayment() {
 }
 
 // ==================== КАТАЛОГ ====================
+// ==================== КАТАЛОГ ====================
 async function renderCatalog() {
-    // Проверяем доступность пробного периода
-    const trialAvailable = await checkTrialAvailable();
+    const plansGrid = document.getElementById('plansGrid');
+    if (!plansGrid) return;
     
-    // Скрываем или показываем пробный тариф
-    const trialTariff = document.getElementById('tariff-trial');
-    if (trialTariff) {
-        if (!trialAvailable) {
-            trialTariff.style.display = 'none';
-        } else {
-            trialTariff.style.display = 'block';
-        }
+    // Показываем скелетон (лоадер)
+    plansGrid.innerHTML = `
+        <div class="skeleton-card" style="background: rgba(255,255,255,0.05); border-radius: 15px; height: 350px;"></div>
+        <div class="skeleton-card" style="background: rgba(255,255,255,0.05); border-radius: 15px; height: 350px;"></div>
+        <div class="skeleton-card" style="background: rgba(255,255,255,0.05); border-radius: 15px; height: 350px;"></div>
+        <div class="skeleton-card" style="background: rgba(255,255,255,0.05); border-radius: 15px; height: 350px;"></div>
+    `;
+    
+    // Загружаем товары из API
+    const products = await loadProducts();
+    
+    let displayProducts = products;
+
+    if (displayProducts.length === 0) {
+        plansGrid.innerHTML = '<p style="text-align:center;">Нет доступных тарифов</p>';
+        return;
     }
     
-    // Обновляем обработчики кнопок для всех тарифов
+    // Генерируем HTML карточек (без пробного тарифа)
+    plansGrid.innerHTML = displayProducts.map(product => {
+        const isPopular = product.id === 3;
+        
+        return `
+            <div class="tariff ${isPopular ? 'popular' : ''}" data-product-id="${product.id}">
+                ${isPopular ? '<span class="popular-badge">POPULAR</span>' : ''}
+                <div class="tariff-content">
+                    <h3>${escapeHtml(product.name)}</h3>
+                    <p class="price">${product.price_rub}₽</p>
+                    <p class="duration">${product.days} дней</p>
+                    <ul class="features">
+                        <li>✓ Полный доступ</li>
+                        <li>✓ Все серверы</li>
+                        <li>✓ Без ограничений скорости</li>
+                        ${product.id >= 2 ? '<li>✓ Приоритетная поддержка</li>' : ''}
+                        ${product.id >= 3 ? '<li>✓ Экономия до 35%</li>' : ''}
+                    </ul>
+                </div>
+                <button class="btn primary btn-buy" data-product-id="${product.id}" data-product-name="${escapeHtml(product.name)}">Купить</button>
+            </div>
+        `;
+    }).join('');
+    
+    // Добавляем обработчики для кнопок
     document.querySelectorAll('.btn-buy').forEach(btn => {
-        // Удаляем старый обработчик, чтобы не дублировался
         btn.removeEventListener('click', handleBuyClick);
         btn.addEventListener('click', handleBuyClick);
     });
 }
 
-// Отдельная функция для обработки клика по кнопке "Купить"
+// Обработчик для обычной покупки
 async function handleBuyClick(e) {
-    e.preventDefault();
     const btn = e.currentTarget;
-    
-    // Определяем ID товара по data-plan-id
-    const planId = btn.getAttribute('data-plan-id');
-    const productName = btn.getAttribute('data-plan-name');
-    const productPrice = btn.getAttribute('data-plan-price');
-    
-    let productId = null;
-    
-    // Маппинг data-plan-id на реальный ID товара в БД
-    switch (planId) {
-        case 'trial':
-            productId = 5;
-            break;
-        case '1month':
-            productId = 1;
-            break;
-        case '3month':
-            productId = 2;
-            break;
-        case '6month':
-            productId = 3;
-            break;
-        case '12month':
-            productId = 4;
-            break;
-        default:
-            productId = parseInt(planId);
-    }
+    const productId = parseInt(btn.dataset.productId);
+    const productName = btn.dataset.productName;
     
     if (!productId) return;
     
-    // Для пробного тарифа своя логика
-    if (planId === 'trial') {
-        const isAuth = await isUserAuthenticated();
-        if (!isAuth) {
-            localStorage.setItem('pending_trial', 'true');
-            showAuthModal(null, null);
-            return;
-        }
-        
-        btn.disabled = true;
-        btn.textContent = '⏳ Активация...';
-        
-        const success = await activateTrial();
-        if (!success) {
-            btn.disabled = false;
-            btn.textContent = 'Купить';
-            alert('Ошибка активации пробного периода. Возможно, вы уже использовали его.');
-        }
-        return;
-    }
-    
-    // Обычный товар
     btn.disabled = true;
     btn.textContent = '⏳';
     
@@ -532,48 +515,46 @@ async function handleBuyClick(e) {
     }
 }
 
-// ==================== ПРОБНЫЙ ПЕРИОД ====================
-async function checkTrialAvailable() {
-    try {
-        const response = await fetch('/api/trial/check', {
-            credentials: 'include'
-        });
-        const data = await response.json();
-        return data.available === true;
-    } catch (error) {
-        console.error('Error checking trial:', error);
-        return false;
-    }
-}
-
-async function activateTrial() {
-    try {
-        const response = await fetch('/api/trial/activate', {
-            method: 'POST',
-            credentials: 'include'
-        });
-        const data = await response.json();
-        if (data.orderId) {
-            // Перенаправляем на оплату (сумма 0)
-            window.location.href = `/payment.html?orderId=${data.orderId}&total=0&isTrial=true`;
-            return true;
-        }
-        return false;
-    } catch (error) {
-        console.error('Error activating trial:', error);
-        return false;
-    }
+// Функция для экранирования HTML
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
 }
 
 // ==================== ПРОВЕРКА ОТЛОЖЕННОГО ТОВАРА ====================
 async function checkPendingProduct() {
-    // Проверяем отложенную активацию пробного периода
-    const pendingTrial = localStorage.getItem('pending_trial');
-    if (pendingTrial === 'true') {
-        localStorage.removeItem('pending_trial');
-        const isAuth = await isUserAuthenticated();
-        if (isAuth) {
-            await activateTrial();
+    
+    // Проверяем отложенный обычный товар
+    const pending = localStorage.getItem('pending_product');
+    if (!pending) return false;
+    
+    const data = JSON.parse(pending);
+    if (Date.now() - data.timestamp > 10 * 60 * 1000) {
+        localStorage.removeItem('pending_product');
+        return false;
+    }
+    
+    const isAuth = await isUserAuthenticated();
+    if (isAuth) {
+        localStorage.removeItem('pending_product');
+        const success = await addToCart(data.id, 1);
+        if (success) {
+            updateCartCount();
+            showNotification(`${data.name} добавлен в корзину!`, 'success');
+            // Обновляем кнопку, если она есть на странице
+            const btns = document.querySelectorAll(`.btn-buy[data-product-id="${data.id}"]`);
+            btns.forEach(btn => {
+                btn.textContent = '✓';
+                setTimeout(() => {
+                    if (btn.textContent === '✓') btn.textContent = 'Купить';
+                    btn.disabled = false;
+                }, 1500);
+            });
         }
         return true;
     }
