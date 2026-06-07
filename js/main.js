@@ -124,8 +124,9 @@ async function renderCart() {
     
     if (!cart.items || cart.items.length === 0) {
         cartItemsContainer.innerHTML = `
-            <div class="cart-empty">
+            <div class="cart-empty" align="center">
                 <p>🛒 Корзина пуста</p>
+                <br><br>
                 <a href="catalog.html" class="btn primary">Перейти к тарифам</a>
             </div>
         `;
@@ -167,7 +168,7 @@ async function renderCart() {
         document.getElementById('total-price').textContent = `${total}₽`;
     }
     
-    // Добавляем обработчик удаления
+    // Обработчик удаления
     document.querySelectorAll('.remove-btn').forEach(btn => {
         btn.addEventListener('click', async () => {
             const itemId = btn.dataset.id;
@@ -286,7 +287,7 @@ async function addToCartWithAuth(productId, productName, btn) {
     
     const success = await addToCart(productId, 1);
     if (success) {
-        btn.textContent = '✓';
+        btn.textContent = '✓ Добавлено в корзину';
         setTimeout(() => {
             btn.textContent = 'Купить';
             btn.disabled = false;
@@ -442,7 +443,6 @@ async function processPayment() {
 }
 
 // ==================== КАТАЛОГ ====================
-// ==================== КАТАЛОГ ====================
 async function renderCatalog() {
     const plansGrid = document.getElementById('plansGrid');
     if (!plansGrid) return;
@@ -465,7 +465,7 @@ async function renderCatalog() {
         return;
     }
     
-    // Генерируем HTML карточек (без пробного тарифа)
+    // Генерируем HTML карточек
     plansGrid.innerHTML = displayProducts.map(product => {
         const isPopular = product.id === 3;
         
@@ -529,7 +529,7 @@ function escapeHtml(str) {
 // ==================== ПРОВЕРКА ОТЛОЖЕННОГО ТОВАРА ====================
 async function checkPendingProduct() {
     
-    // Проверяем отложенный обычный товар
+    // Проверяем отложенный товар
     const pending = localStorage.getItem('pending_product');
     if (!pending) return false;
     

@@ -1,5 +1,3 @@
-// account.js – полная рабочая версия
-
 // ==================== ОСНОВНАЯ ЗАГРУЗКА ====================
 async function loadAccount() {
     try {
@@ -65,7 +63,6 @@ async function loadAccount() {
             addVpnBlock(user.vpn_link);
         }
 
-        // Кнопка выхода
         const logoutBtn = document.getElementById('logout-btn');
         if (logoutBtn) {
             logoutBtn.onclick = async () => {
@@ -100,7 +97,6 @@ async function loadQuickRenewal() {
         if (planPriceEl) planPriceEl.textContent = `${plan.price_rub}₽`;
         
         if (renewalBtn) {
-            // Убираем старые обработчики
             const newBtn = renewalBtn.cloneNode(true);
             renewalBtn.parentNode.replaceChild(newBtn, renewalBtn);
             
@@ -201,10 +197,12 @@ function showAuthWidget() {
     const sidebar = document.querySelector('.account-sidebar');
     if (accountContent) {
         accountContent.innerHTML = `
-            <div style="text-align:center;padding:40px;">
-                <p>Войдите через Telegram</p>
+            <div style="background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); max-width: 400px; margin: 0 auto; text-align:center; padding: 50px 30px;">
+                <div style="font-size: 48px; margin-bottom: 15px;">🔐</div>
+                <p style="margin-bottom: 10px; font-size: 20px; font-weight: 500; color: #fff;">Вход в аккаунт</p>
+                <p style="margin-bottom: 30px; font-size: 14px; color: #888;">Используйте Telegram для авторизации</p>
                 <div id="telegram-login-widget"></div>
-                <div id="auth-status" style="margin-top:10px;">Нажмите для входа</div>
+                <div id="auth-status" style="margin-top: 20px; font-size: 12px; color: #666;">Нажмите кнопку выше</div>
             </div>
         `;
         if (sidebar) sidebar.style.display = 'none';

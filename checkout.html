@@ -6,7 +6,6 @@
   <title>Оформление заказа - Vepon VPN</title>
 
   <link rel="stylesheet" href="css/style.css">
-  <!-- Скрипт виджета загружаем один раз, без динамического создания -->
 </head>
 <body>
 
@@ -49,7 +48,6 @@
           <div class="form-group">
             <label>Telegram Login</label>
             <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
-              <!-- Виджет Telegram – правильная версия (без onauth, только auth-url) -->
               <div id="telegram-login-widget">
                 <script async src="https://telegram.org/js/telegram-widget.js?22"
                         data-telegram-login="VePoN_bot"
@@ -76,7 +74,6 @@
           <h3>Ваш заказ</h3>
 
           <div id="checkout-items">
-            <!-- Items will be rendered here by JavaScript -->
           </div>
 
           <div class="item">
@@ -147,7 +144,6 @@
 
   <script src="js/nav-indicator.js"></script>
   <script src="js/main.js"></script>
-  <!-- Дополнительный скрипт для отображения статуса авторизации после редиректа -->
   <script>
     (function() {
       // Проверка статуса авторизации при загрузке страницы

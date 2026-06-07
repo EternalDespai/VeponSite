@@ -14,7 +14,7 @@ async function loadUserInfo() {
         let statusHtml = '';
         if (isActive && expiresAt) {
             const daysLeft = Math.ceil((expiresAt - now) / (1000 * 60 * 60 * 24));
-            statusHtml = `<span class="status-badge active">✅ Подписка активна, осталось ${daysLeft} дн. (до ${expiresAt.toLocaleDateString('ru-RU')})</span>`;
+            statusHtml = `<span class="status-badge active">✅ Подписка активна</span>`;
         } else {
             statusHtml = `<span class="status-badge expired">⚠️ Нет активной подписки</span>`;
         }

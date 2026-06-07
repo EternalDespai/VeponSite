@@ -8,19 +8,10 @@ class NavIndicator {
   }
 
   init() {
-    // Создаем индикатор
     this.createIndicator();
-    
-    // Получаем все навигационные ссылки
     this.updateNavLinks();
-    
-    // Определяем текущую страницу
     this.setCurrentPage();
-    
-    // Позиционируем индикатор
     this.positionIndicator();
-    
-    // Добавляем обработчики событий
     this.addEventListeners();
   }
 
@@ -49,7 +40,6 @@ class NavIndicator {
     } else if (currentFile === 'instructions.html') {
       this.currentPage = 'Инструкции';
     } else if (currentFile === 'account.html') {
-      // Проверяем есть ли ссылка "Профиль" в навигации
       const profileLink = this.navLinks.find(link => 
         link.textContent.trim() === 'Профиль'
       );
@@ -77,8 +67,8 @@ class NavIndicator {
       const navRect = activeLink.parentElement.getBoundingClientRect();
       
       // Позиционируем индикатор относительно навигации
-      const left = linkRect.left - navRect.left - 10; // Дополнительное пространство по бокам
-      const width = linkRect.width + 20; // Увеличиваем ширину
+      const left = linkRect.left - navRect.left - 10;
+      const width = linkRect.width + 20;
       
       this.indicator.style.left = `${left}px`;
       this.indicator.style.width = `${width}px`;
@@ -118,15 +108,14 @@ class NavIndicator {
     const linkRect = link.getBoundingClientRect();
     const navRect = link.parentElement.getBoundingClientRect();
     
-    const left = linkRect.left - navRect.left - 10; // Дополнительное пространство по бокам
-    const width = linkRect.width + 20; // Увеличиваем ширину
+    const left = linkRect.left - navRect.left - 10;
+    const width = linkRect.width + 20; 
     
     this.indicator.style.left = `${left}px`;
     this.indicator.style.width = `${width}px`;
   }
 }
 
-// Инициализация при загрузке
 let navIndicator;
 document.addEventListener('DOMContentLoaded', () => {
   navIndicator = new NavIndicator();

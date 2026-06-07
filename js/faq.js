@@ -1,4 +1,3 @@
-// FAQ functionality with smooth appearance
 document.addEventListener('DOMContentLoaded', function() {
   // 1. Аккордеон для FAQ
   const faqItems = document.querySelectorAll('.faq-item');
@@ -20,22 +19,19 @@ document.addEventListener('DOMContentLoaded', function() {
   // 2. Плавное появление элементов FAQ при загрузке страницы
   const animateElements = document.querySelectorAll('.faq-item, .support-contacts, .contact-item');
   
-  // Сначала скрываем все элементы
   animateElements.forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
   });
 
-  // Показываем элементы с задержкой
   animateElements.forEach((el, index) => {
     setTimeout(() => {
       el.style.opacity = '1';
       el.style.transform = 'translateY(0)';
-    }, index * 80); // каждый следующий элемент появляется через 0.08 секунды
+    }, index * 80); // элемент появляется через 0.08 секунды
   });
 
-  // 3. Для страницы поддержки можно добавить эффект при наведении на контакты
   const contactItems = document.querySelectorAll('.contact-item');
   contactItems.forEach(item => {
     item.addEventListener('mouseenter', () => {
