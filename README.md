@@ -111,8 +111,7 @@ awg/
 ### Установка и запуск
 
 #### 1. Клонирование репозитория
-
-- git clone https://github.com/EternalDespai/VeponSite.git
+    git clone https://github.com/EternalDespai/VeponSite.git
 
 #### 2. Запуск API сервера (Node.js)
     cd api
@@ -127,7 +126,6 @@ awg/
     # Сервер запустится на http://localhost:8080
 
 #### 4. Настройка окружения
-- Создайте файл .env в корне проекта:
     BOT_TOKEN=your_telegram_bot_token
     ADMIN_ID=your_telegram_id
     SERVER_ENDPOINT=your_server_ip:51820
@@ -144,7 +142,6 @@ awg/
     sqlite3
 
 #### 7. Добавить package.json скрипты
-- В api/package.json добавь:
     "scripts": {
     "start": "node server.js",
     "test": "jest",
