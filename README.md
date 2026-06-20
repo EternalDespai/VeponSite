@@ -128,7 +128,6 @@ awg/
 
 #### 4. Настройка окружения
 - Создайте файл .env в корне проекта:
-
     BOT_TOKEN=your_telegram_bot_token
     ADMIN_ID=your_telegram_id
     SERVER_ENDPOINT=your_server_ip:51820
