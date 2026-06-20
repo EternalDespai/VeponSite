@@ -85,7 +85,35 @@ db.serialize(() => {
 
 // Middleware для получения user_id из cookie
 function getUserId(req) {
-    return req.cookies?.user_id || null;
+  // ТЕСТОВЫЙ РЕЖИМ
+  if (process.env.NODE_ENV === 'test' && req.headers && req.headers['x-test-auth'] === 'true') {
+    console.log('🧪 Тестовый режим: пользователь авторизован (ID: 1)');
+    return 1;
+  }
+  return req.cookies?.user_id || null;
+}
+
+// ============================================
+// ТЕСТОВАЯ АВТОРИЗАЦИЯ
+// ============================================
+if (process.env.NODE_ENV === 'test') {
+  app.post('/auth/telegram', (req, res) => {
+    // Просто устанавливаем сессию для тестов
+    res.cookie('session', 'test_session_' + Date.now(), {
+      httpOnly: true,
+      maxAge: 3600000,
+      path: '/'
+    });
+    
+    res.json({
+      success: true,
+      user: {
+        id: 1,
+        telegramId: req.body.id || '1124502908',
+        name: 'Test User'
+      }
+    });
+  });
 }
 
 // ==================== API ТОВАРЫ ====================
@@ -421,7 +449,7 @@ app.post('/api/payments/:orderId', (req, res) => {
                 let vpnLink = null;
                 
                 try {
-                    // создание или продление
+                    // ВЫЗЫВАЕМ ТОЛЬКО ОДИН РАЗ — создание или продление
                     vpnResult = await createOrExtendVpn(userId, username, totalDays);
                     
                     if (vpnResult && vpnResult.success) {
@@ -433,7 +461,8 @@ app.post('/api/payments/:orderId', (req, res) => {
                     console.error('VPN API error:', vpnError);
                 }
                 
-                // отмечаем заказ как оплаченный
+                // НЕ ОБНОВЛЯЕМ expires_at повторно! Бот уже сделал это.
+                // Только отмечаем заказ как оплаченный
                 db.run(`
                     UPDATE shop_orders 
                     SET status = 'paid', 
@@ -469,7 +498,7 @@ app.post('/api/payments/:orderId', (req, res) => {
 // ==================== API АДМИНКА (опционально) ====================
 // Проверка, является ли пользователь админом
 function isAdmin(userId) {
-    const ADMIN_IDS = [YOUR_TELEGRAM_ID]; 
+    const ADMIN_IDS = [1124502908]; // yametecyka
     return ADMIN_IDS.includes(parseInt(userId));
 }
 
@@ -496,7 +525,12 @@ app.get('/api/admin/orders', (req, res) => {
 // ==================== СТАТИКА ====================
 app.use(express.static(path.join(__dirname, '..')));
 
-// Запуск сервера
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 Shop API running on port ${PORT}`);
-});
+// ЭКСПОРТ для тестов
+module.exports = app;
+
+// Запуск сервера ТОЛЬКО если файл запущен напрямую (не через тесты)
+if (require.main === module) {
+    app.listen(PORT, '0.0.0.0', () => {
+        console.log(`🚀 Shop API running on port ${PORT}`);
+    });
+}
