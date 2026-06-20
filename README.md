@@ -101,6 +101,57 @@ awg/
 - `GET /auth/check` - Проверить авторизацию
 - `GET /auth/subscription` - Получить информацию о подписке
 
+## Инструкция локального запуска
+
+### Требования
+- Node.js 18+
+- Python 3.9+
+- SQLite3
+
+### Установка и запуск
+
+#### 1. Клонирование репозитория
+
+- git clone https://github.com/EternalDespai/VeponSite.git
+
+#### 2. Запуск API сервера (Node.js)
+    cd api
+    npm install
+    npm start
+    # Сервер запустится на http://localhost:3000
+
+#### 3. Запуск Auth сервера (Python)
+    cd awg
+    pip install -r requirements.txt
+    python auth_server.py
+    # Сервер запустится на http://localhost:8080
+
+#### 4. Настройка окружения
+- Создайте файл .env в корне проекта:
+
+    BOT_TOKEN=your_telegram_bot_token
+    ADMIN_ID=your_telegram_id
+    SERVER_ENDPOINT=your_server_ip:51820
+
+#### 5. Запуск тестов
+    cd api
+    npm test
+
+#### 6. Создать файл `requirements.txt` для Python
+    flask==2.3.3
+    flask-cors==4.0.0
+    aiogram==2.25.1
+    aiohttp==3.9.1
+    sqlite3
+
+#### 7. Добавить package.json скрипты
+- В api/package.json добавь:
+    "scripts": {
+    "start": "node server.js",
+    "test": "jest",
+    "dev": "nodemon server.js"
+}
+
 ## Тарифы
 
 - 30 дней - 180₽
@@ -117,8 +168,8 @@ awg/
 ## Примечания
 
 - Проект требует одновременной работы обоих серверов (site-vepon и awg)
-- Для полноценной работы необходим настроенный рабочий Telegram Bot для выдачи конфигураций
-- Нобходим настроенный на сервере протокол AmneziaWG для работы VPN
+- Для полноценной работы необходим настроенный Telegram Bot для выдачи конфигураций
+- Для полноценной работы VPN-функционала требуется настроенный AmneziaWG на сервере
 - База данных SQLite используется для хранения заказов и клиентов
 - AmneziaWG используется для предоставления VPN доступа
 - Telegram бот @vepon_bot используется для авторизации
